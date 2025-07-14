@@ -1,21 +1,5 @@
 // pages/api/posts.js
-let posts = [
-  {
-    id: "1",
-    title: "this is first title",
-    description: "this is first description",
-  },
-  {
-    id: "2",
-    title: "this is second title",
-    description: "this is second description",
-  },
-];
-
-// Helper function to generate new ID
-function generateId() {
-  return String(Date.now());
-}
+import { getAllPosts, addPost } from "../../data/posts.js";
 
 export default function handler(req, res) {
   // Set CORS headers
@@ -34,17 +18,19 @@ export default function handler(req, res) {
   switch (req.method) {
     case "GET":
       // Get all posts
+      const posts = getAllPosts();
       return res.status(200).json(posts);
 
     case "POST":
       // Create new post
-      const newPost = {
-        id: generateId(),
-        title: req.body.title || "",
-        description: req.body.description || "",
-      };
-      posts.push(newPost);
-      return res.status(201).json(newPost);
+      try {
+        const newPost = addPost(req.body);
+        return res.status(201).json(newPost);
+      } catch (error) {
+        return res
+          .status(400)
+          .json({ message: "Error creating post", error: error.message });
+      }
 
     default:
       res.setHeader("Allow", ["GET", "POST"]);
