@@ -1,4 +1,3 @@
-// pages/api/posts/[id].js
 import { getPostById, updatePost, deletePost } from "../../../data/posts.js";
 
 export default function handler(req, res) {

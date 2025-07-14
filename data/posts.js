@@ -1,4 +1,3 @@
-// data/posts.js - Shared data source
 let posts = [
   {
     id: "1",

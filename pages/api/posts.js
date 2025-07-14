@@ -1,4 +1,3 @@
-// pages/api/posts.js
 import { getAllPosts, addPost } from "../../data/posts.js";
 
 export default function handler(req, res) {
